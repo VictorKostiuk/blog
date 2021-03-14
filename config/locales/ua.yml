@@ -1,0 +1,14 @@
+ua:
+  commons:
+    errors: 'При заповненні форми виникли помилки'
+    back: 'Назад'
+  posts:
+    index:
+      title: 'Статті'
+    new:
+      title: 'Нова стаття'
+    edit:
+      title: 'Редагувати статтю'
+    form:
+      submit:
+       '%{action} статтю'
