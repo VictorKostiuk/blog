@@ -3,10 +3,14 @@ ua:
     models:
       post: 'Стаття'
     attributes:
-     post:
-      title: 'Назва'
-      summary: 'Короткий опис'
-      body: 'Зміст'
+      post:
+        title: 'Назва'
+        summary: 'Короткий опис'
+        body: 'Зміст'
+        all_tags: 'Теги'
+      category:
+        name: 'Назва'
+        parent_id: 'Батьківська категорія'
     errors:
       messages:
         blank: 'не може бути пустим'

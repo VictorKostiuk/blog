@@ -14,15 +14,35 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="<%= posts_path %>">Posts</a>
+        <li class="nav-item  <%= 'active' if current_page?(root_path) || current_page?(posts_path) %>">
+          <a class="nav-link" href="<%= root_path %>">Posts</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contacts</a>
-        </li>
+    <% Category.order(:name).roots.each do |category| %>
+          <li class="nav-item" <%= 'active' if current_page?(category_path(category))%>>
+            <%= link_to category.name, category , class: 'nav-link' %>
+          </li>
+    <% end %>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <%= link_to 'New post', new_post_path, class: 'btn btn-outline-primary pull-xs-right' %>
+        <ul class="navbar-nav mr-auto">
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to 'Вихід', destroy_user_session_path, method: :delete, class: 'nav-link'%>
+            </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Вхід', new_user_session_path, class: 'nav-link'%>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Регістрація', new_user_registration_path, class: 'nav-link' %>
+          <% end %>
+          <li class="nav-item<%= " active" if I18n.locale == :ua %>">
+            <%= link_to "Укр", {locale: :ua }, class: 'nav-link' %>
+          </li>
+          <li class="nav-item<%= " active" if I18n.locale == :en %>">
+            <%= link_to "En", {locale: :en }, class: 'nav-link' %>
+          </li>
+        </ul>
       </form>
     </div>
   </nav>
@@ -33,14 +53,28 @@
     <div class="row">
       <div class="col-md-12">
         <% flash.each do |name, message| %>
-        <div class="alert alert-<%= name %>">
+        <div class="alert <%= bootstrap_class_for(name) %>">
+          <button class="close" data-dissmiss="alert">&times</button>
           <%= message %>
         </div>
         <% end %>
       </div>
     </div>
-    <%= yield %>
-  </div>
+    <div class="row">
+      <div class="col-md-9">
+       <%= yield %>
+      </div>
+      <div class="col-md-3">
+        <%= render 'shared/submenu' %>
+        <div class="tag_cloud">
+          <h2>Теги</h2>
+          <% tag_cloud(Tag.counts, %w{tag1, tag2, tag3, tag4, tag5}) do |tag, css_class| %>
+            <%= link_to tag.name,tag_path(tag.name), class: css_class %>
+          <% end %>
+        </div>
+      </div>
+     </div>
 
+    </div>
   </body>
 </html>

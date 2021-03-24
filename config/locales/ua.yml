@@ -1,14 +1,31 @@
 ua:
-  commons:
+  common:
     errors: 'При заповненні форми виникли помилки'
     back: 'Назад'
+    create: 'Створити'
+    edit: 'Редагувати'
+  will_paginate:
+    previous_label: '&larr; Туди'
+    next_label: 'Сюди &rarr;'
   posts:
     index:
       title: 'Статті'
-    new:
-      title: 'Нова стаття'
-    edit:
-      title: 'Редагувати статтю'
-    form:
-      submit:
-       '%{action} статтю'
+  admin:
+    posts:
+      new:
+        title: 'Нова стаття'
+      edit:
+        title: 'Редагувати статтю'
+      form:
+        submit:
+          '%{action} статтю'
+    categories:
+      index:
+        title: 'Категорії'
+      new:
+        title: 'Нова категорія'
+      edit:
+        title: 'Редагувати категорії'
+      form:
+        submit:
+          '%{action} категорію'

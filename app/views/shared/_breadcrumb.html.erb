@@ -1,0 +1,5 @@
+<% if category.present? && category.parent %>
+  <ol class="breadcrumb">
+<%= builds_breadcrumbs(category) %>
+  </ol>
+<% end %>

@@ -1,3 +1,11 @@
 <h1><%= t('posts.index.title') %><h1>
 
-<%= render @posts %>
+  <% if user_signed_in? && current_user.admin? %>
+<%= link_to 'New post', new_admin_post_path, class: 'btn btn-outline-primary btn-sm' %>
+<% end %>
+
+<section id='posts'>
+  <%= render @posts %>
+</section>
+
+<%= will_paginate @posts, renderer: 'BootstrapPaginationHelper::LinkRenderer' %>

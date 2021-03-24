@@ -1,0 +1,31 @@
+<h1><%= t('.title') %></h1>
+
+<div class="buttons_panel">
+ <%= link_to 'Нова категорія', new_admin_category_path, class: 'btn btn-outline-primary btn-sm' %>
+</div>
+
+<section id="categories">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Назва</th>
+      <th>Батьківська категорія</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @categories.each_with_index do |category, index |  %>
+    <tr>
+      <th><%= index + 1 %></th>
+      <th><%= category.name %></th>
+      <th><%= category.parent.name if category.parent.present? %></th>
+      <th>
+        <%= link_to 'Змінити', edit_admin_category_path(category), class: 'btn btn-outline-primary btn-sm' %>
+        <%= link_to 'Видалити', admin_category_path(category), method: :delete, data: {confirm: 'Ви впевнені?'} , class: 'btn btn-outline-danger btn-sm' %>
+      </th>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+</section>
