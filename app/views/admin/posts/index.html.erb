@@ -1,0 +1,7 @@
+<h1><%= t('posts.index.title') %><h1>
+
+<%= link_to 'New post', new_admin_post_path, class: 'btn btn-outline-primary btn-sm' %>
+
+<section id='posts'>
+  <%= render @posts %>
+</section>

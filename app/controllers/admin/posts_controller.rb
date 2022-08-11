@@ -1,17 +1,26 @@
 class Admin::PostsController < Admin::AdminController
   before_action :set_post, only: [ :edit, :update, :destroy]
 
+  def index
+    @posts = Post.for_processing
+  end
   def new
     @post = Post.new
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
     if @post.save
       redirect_to @post, success: 'article successfully created'
     else
       render :new, danger: 'article not created'
     end
+  end
+
+  def update_status
+    @post = Post.find(params[:id])
+    @post.update(status: params[:status])
+    redirect_to @post
   end
 
   def edit
@@ -40,6 +49,6 @@ class Admin::PostsController < Admin::AdminController
   end
 
   def post_params
-    params.require(:post).permit(:title, :summary, :body, :image, :all_tags, :category_id)
+    params.require(:post).permit(:title, :summary, :body, :image, :all_tags, :category_id, :post_id)
   end
 end

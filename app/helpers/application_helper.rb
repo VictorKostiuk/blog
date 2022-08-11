@@ -10,6 +10,9 @@ module ApplicationHelper
     result.join('').html_safe
   end
 
+  def user
+    user = current_user
+  end
   def bootstrap_class_for(name)
     {success: 'alert-success',
      error: 'alert-error',

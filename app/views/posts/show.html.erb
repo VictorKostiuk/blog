@@ -5,15 +5,18 @@
     <h1><%=@post.title %></h1>
     <small>
       <time><%= @post.created_at.to_date.strftime("%d %B, %Y") %></time>
+      <%= @post.status %>
       <% if @post.category.present? %>
-
         <%= link_to @post.category.name, @post.category %>
       <% end %>
-      <% if user_signed_in? && current_user.admin? %>
-      <%= link_to 'edit', edit_admin_post_path(@post) %>
 
-      <%= link_to 'delete', admin_post_path(@post), method: :delete, data: { confirm: 'Are you sure?' } %>
-      <% #end %>
+      <% if user_signed_in? && current_user.admin? %>
+        <%= link_to 'edit', edit_admin_post_path(@post) %>
+        <%= link_to 'delete', admin_post_path(@post), method: :delete, data: { confirm: 'Are you sure?' } %>
+
+        <% Post::STATUSES.each do |status| %>
+          <small><%= button_to status, update_status_admin_post_path(@post, status: status), method: :patch, class: 'btn btn-dark'%></small>
+        <% end %>
       <% end %>
     </small>
   </section>

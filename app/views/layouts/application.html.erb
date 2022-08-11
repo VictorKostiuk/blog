@@ -11,41 +11,51 @@
 
   <body>
 <div class="container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item  <%= 'active' if current_page?(root_path) || current_page?(posts_path) %>">
-          <a class="nav-link" href="<%= root_path %>">Posts</a>
-        </li>
-    <% Category.order(:name).roots.each do |category| %>
-          <li class="nav-item" <%= 'active' if current_page?(category_path(category))%>>
-            <%= link_to category.name, category , class: 'nav-link' %>
-          </li>
-    <% end %>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
+ <% if current_user && current_user.admin %>
+  <%= render 'layouts/admin.html.erb' %>
+  <% else %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <% if user_signed_in? %>
-            <li class="nav-item">
-              <%= link_to 'Вихід', destroy_user_session_path, method: :delete, class: 'nav-link'%>
+          <li class="nav-item  <%= 'active' if current_page?(root_path) || current_page?(posts_path) %>">
+            <a class="nav-link" href="<%= root_path %>">Posts</a>
+          </li>
+          <% Category.order(:name).roots.each do |category| %>
+            <li class="nav-item" <%= 'active' if current_page?(category_path(category))%>>
+              <%= link_to category.name, category , class: 'nav-link' %>
             </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to 'Вхід', new_user_session_path, class: 'nav-link'%>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Регістрація', new_user_registration_path, class: 'nav-link' %>
           <% end %>
-          <li class="nav-item<%= " active" if I18n.locale == :ua %>">
-            <%= link_to "Укр", {locale: :ua }, class: 'nav-link' %>
-          </li>
-          <li class="nav-item<%= " active" if I18n.locale == :en %>">
-            <%= link_to "En", {locale: :en }, class: 'nav-link' %>
-          </li>
         </ul>
-      </form>
-    </div>
-  </nav>
+        <form class="form-inline my-2 my-lg-0">
+          <ul class="navbar-nav mr-auto">
+            <% if user_signed_in? %>
+              <li class="nav-item">
+                <div class="nav-link">
+                  <%= current_user.posts_count %>
+                </div>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Вихід', destroy_user_session_path, method: :delete, class: 'nav-link'%>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to 'Вхід', new_user_session_path, class: 'nav-link'%>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Регістрація', new_user_registration_path, class: 'nav-link' %>
+            <% end %>
+            <li class="nav-item<%= " active" if I18n.locale == :ua %>">
+              <%= link_to "Укр", {locale: :ua }, class: 'nav-link' %>
+            </li>
+            <li class="nav-item<%= " active" if I18n.locale == :en %>">
+              <%= link_to "En", {locale: :en }, class: 'nav-link' %>
+            </li>
+          </ul>
+        </form>
+      </div>
+    </nav>
+  <% end %>
+
 </div>
 
 

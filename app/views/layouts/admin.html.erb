@@ -9,13 +9,16 @@
 
 <body>
 <div class="container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Админ Панель</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Адмін Панель</a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item <%= 'active' if current_page?(root_path) || current_page?(posts_path) %>">
-          <a class="nav-link" href="<%= root_path %>">Все статьи</a>
+          <a class="nav-link" href="<%= root_path %>">Всі статті</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= admin_posts_path %>">Всі статті на доробку</a>
         </li>
         <% Category.order(:name).roots.each do |category| %>
           <li class="nav-item <%= 'active' if current_page?(category_path(category)) %>">
@@ -27,14 +30,19 @@
       <ul class="navbar-nav pull-xs-right">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to "Выход", destroy_user_session_path, method: :delete, class: "nav-link" %>
+            <div class="nav-link">
+              <%= current_user.posts_count %>
+            </div>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Вихід", destroy_user_session_path, method: :delete, class: "nav-link" %>
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to "Вход", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Вхід", new_user_session_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Регистрация", new_user_registration_path, class: "nav-link" %>
+            <%= link_to "Реєстрація", new_user_registration_path, class: "nav-link" %>
           </li>
         <% end %>
         <li class="nav-item<%= " active" if I18n.locale == :ua %>">
